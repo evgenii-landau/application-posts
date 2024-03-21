@@ -1,20 +1,18 @@
 import styles from './Input.module.scss'
-import {FC, useState} from "react";
+import React, {useContext} from "react";
+import {PostContext} from "../../../Context/PostContext.tsx";
 
 interface InputProps {
 	children: string;
-	inputRefTitle: React.MutableRefObject<HTMLInputElement | null>;
-	inputRefDesc: React.MutableRefObject<HTMLInputElement | null>;
 }
 
-export const Input: FC<InputProps> = ({children, inputRefTitle, inputRefDesc}) => {
-	const [value, setValue] = useState<string>('')
-
+export const Input: React.FC<InputProps> = ({children}) => {
+	const {inputValue, setInput} = useContext(PostContext)
+	const value = children.split(' ').includes('Описание') ? inputValue.body : inputValue.title
 
 	return (
 		<div>
-			<h1>{value}</h1>
-			<input className={styles.input} ref={children.split(' ').includes('Описание') ? inputRefDesc : inputRefTitle}  type="text" placeholder={children}/>
+			<input className={styles.input} onChange={(e) => children.split(' ').includes('Описание') ? setInput({...inputValue, body: e.target.value}) : setInput({...inputValue, title: e.target.value})} value={value} type="text" placeholder={children}/>
 		</div>
 	)
 }

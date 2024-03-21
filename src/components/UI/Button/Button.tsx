@@ -1,12 +1,14 @@
 import styles from './Button.module.scss'
-import {FC, useState} from "react";
+import React, {useContext, useState} from "react";
+import {PostContext} from "../../../Context/PostContext.tsx";
 
 interface ButtonProps {
 	children: string
-	addNewPost: () => void
 }
 
-export const Button: FC<ButtonProps> = ({children, addNewPost}) => {
+export const Button: React.FC<ButtonProps> = ({children}) => {
+	const {addNewPost} = useContext(PostContext)
+
 	const [isDisabled, setIsDisabled] = useState<boolean>(false)
 
 	return (
