@@ -10,5 +10,5 @@ ReactDOM.createRoot(document.getElementById('root')!).render(
     <PostProvider>
       <App/>
     </PostProvider>
-  </React.StrictMode>,
+  </React.StrictMode>
 )

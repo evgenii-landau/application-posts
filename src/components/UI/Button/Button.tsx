@@ -1,5 +1,5 @@
 import styles from './Button.module.scss'
-import React, {useContext, useState} from "react";
+import React, {useContext, useEffect, useState} from "react";
 import {PostContext} from "../../../Context/PostContext.tsx";
 
 interface ButtonProps {
@@ -7,9 +7,17 @@ interface ButtonProps {
 }
 
 export const Button: React.FC<ButtonProps> = ({children}) => {
-	const {addNewPost} = useContext(PostContext)
+	const {addNewPost, inputValue} = useContext(PostContext)
+	const [isDisabled, setIsDisabled] = useState<boolean>(true)
 
-	const [isDisabled, setIsDisabled] = useState<boolean>(false)
+	useEffect(() => {
+		if (inputValue.title !== '' && inputValue.body !== '') {
+			setIsDisabled(false)
+		} else {
+			setIsDisabled(true)
+		}
+
+	}, [inputValue.title, inputValue.body]);
 
 	return (
 		<button className={styles.button} onClick={() => addNewPost()} type='button' disabled={isDisabled}>{children}</button>
